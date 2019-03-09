@@ -11,6 +11,8 @@
 		1A58812D221F4755009923B3 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58812C221F4755009923B3 /* MapViewController.swift */; };
 		1A588131221F4AC3009923B3 /* InfoCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A588130221F4AC3009923B3 /* InfoCardView.swift */; };
 		1A588134221F4C97009923B3 /* HealthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A588133221F4C97009923B3 /* HealthController.swift */; };
+		1AB7DABF222C52EF00694C30 /* DataStorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB7DABE222C52EF00694C30 /* DataStorer.swift */; };
+		1AB7DAC1222C53E300694C30 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB7DAC0222C53E300694C30 /* DataStore.swift */; };
 		1AD3D1DE2222B5F900AE7F37 /* InfoCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD3D1DD2222B5F900AE7F37 /* InfoCardViewController.swift */; };
 		1AD3D1E02222B90900AE7F37 /* MapHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD3D1DF2222B90900AE7F37 /* MapHandler.swift */; };
 		1AD3D1E22222E4E400AE7F37 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD3D1E12222E4E400AE7F37 /* Coordinator.swift */; };
@@ -23,6 +25,7 @@
 		1AF2C30F2207452200DA917D /* runstatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2C30E2207452200DA917D /* runstatTests.swift */; };
 		1AF2C31A2207452200DA917D /* runstatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2C3192207452200DA917D /* runstatUITests.swift */; };
 		1AF2C3292207458E00DA917D /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AF2C3282207458E00DA917D /* HealthKit.framework */; };
+		1AF56F34222594A4000BA38D /* runstat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1AF56F32222594A4000BA38D /* runstat.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +50,8 @@
 		1A58812C221F4755009923B3 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		1A588130221F4AC3009923B3 /* InfoCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCardView.swift; sourceTree = "<group>"; };
 		1A588133221F4C97009923B3 /* HealthController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthController.swift; sourceTree = "<group>"; };
+		1AB7DABE222C52EF00694C30 /* DataStorer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorer.swift; sourceTree = "<group>"; };
+		1AB7DAC0222C53E300694C30 /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		1AD3D1DD2222B5F900AE7F37 /* InfoCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCardViewController.swift; sourceTree = "<group>"; };
 		1AD3D1DF2222B90900AE7F37 /* MapHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapHandler.swift; sourceTree = "<group>"; };
 		1AD3D1E12222E4E400AE7F37 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -66,6 +71,7 @@
 		1AF2C31B2207452200DA917D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1AF2C3282207458E00DA917D /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		1AF2C32A2207458E00DA917D /* runstat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = runstat.entitlements; sourceTree = "<group>"; };
+		1AF56F33222594A4000BA38D /* runstat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = runstat.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +137,15 @@
 			path = Health;
 			sourceTree = "<group>";
 		};
+		1AB7DABD222C52D900694C30 /* DataStore */ = {
+			isa = PBXGroup;
+			children = (
+				1AB7DABE222C52EF00694C30 /* DataStorer.swift */,
+				1AB7DAC0222C53E300694C30 /* DataStore.swift */,
+			);
+			path = DataStore;
+			sourceTree = "<group>";
+		};
 		1AF2C2ED2207451F00DA917D = {
 			isa = PBXGroup;
 			children = (
@@ -155,10 +170,12 @@
 		1AF2C2F82207451F00DA917D /* runstat */ = {
 			isa = PBXGroup;
 			children = (
+				1AB7DABD222C52D900694C30 /* DataStore */,
 				1A588132221F4C70009923B3 /* Health */,
 				1A588128221F4519009923B3 /* Features */,
 				1AF2C32A2207458E00DA917D /* runstat.entitlements */,
 				1AF2C2F92207451F00DA917D /* AppDelegate.swift */,
+				1AF56F32222594A4000BA38D /* runstat.xcdatamodeld */,
 				1AD3D1E12222E4E400AE7F37 /* Coordinator.swift */,
 				1AF2C2FB2207451F00DA917D /* ViewController.swift */,
 				1AF2C2FD2207451F00DA917D /* Main.storyboard */,
@@ -331,7 +348,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AB7DAC1222C53E300694C30 /* DataStore.swift in Sources */,
 				1AF2C2FC2207451F00DA917D /* ViewController.swift in Sources */,
+				1AB7DABF222C52EF00694C30 /* DataStorer.swift in Sources */,
+				1AF56F34222594A4000BA38D /* runstat.xcdatamodeld in Sources */,
 				1AD3D1E42222EF2300AE7F37 /* PassthroughView.swift in Sources */,
 				1AD3D1DE2222B5F900AE7F37 /* InfoCardViewController.swift in Sources */,
 				1A588134221F4C97009923B3 /* HealthController.swift in Sources */,
@@ -671,6 +691,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		1AF56F32222594A4000BA38D /* runstat.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				1AF56F33222594A4000BA38D /* runstat.xcdatamodel */,
+			);
+			currentVersion = 1AF56F33222594A4000BA38D /* runstat.xcdatamodel */;
+			path = runstat.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 1AF2C2EE2207451F00DA917D /* Project object */;
 }

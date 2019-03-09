@@ -14,7 +14,6 @@ class MapViewDelegate: NSObject, MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         if let polyline = overlay as? WorkoutPolyline {
             let renderer = WorkoutRenderer(overlay: overlay)
-            renderer.workout = polyline.workout
             renderer.name = polyline.name
             renderer.date = polyline.date
             renderer.big = polyline.big
@@ -36,7 +35,6 @@ class MapViewDelegate: NSObject, MKMapViewDelegate {
 class WorkoutPolyline: MKPolyline {
     var big: Bool = false
     var color: UIColor = UIColor.red
-    var workout: HKWorkout!
     var date: Date?
     var name: String?
 }
@@ -44,7 +42,6 @@ class WorkoutPolyline: MKPolyline {
 class WorkoutRenderer: MKPolylineRenderer {
     var big: Bool = false
     var name: String?
-    var workout: HKWorkout!
     var date: Date?
 }
 class DistanceAnnotation: NSObject, MKAnnotation {

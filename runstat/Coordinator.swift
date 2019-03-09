@@ -8,6 +8,9 @@
 
 import UIKit
 import HealthKit
+import CoreData
+import MapKit
+
 class Coordinator: UIViewController, InfoCardControllerDelegate, MapControllerDelegate {
     
     lazy var infoCardViewController: InfoCardViewController = {
@@ -18,21 +21,35 @@ class Coordinator: UIViewController, InfoCardControllerDelegate, MapControllerDe
     
     lazy var healthFetcher: HealthController = {
         let fetcher = HealthController()
+        fetcher.dataStore = dataStore
         return fetcher
     }()
     
     lazy var mapViewController: MapViewController = {
-        let controller = MapViewController(healthDataFetcher: healthFetcher)
+        let controller = MapViewController(healthDataFetcher: dataStore)
         controller.delegate = self
         return controller
     }()
     
+    lazy var dataStore: DataStore = {
+        let store = DataStore()
+        return store
+    }()
+    
     override func viewDidLoad() {
-        add(mapViewController)
-        add(infoCardViewController)
+        healthFetcher.requestAuth() {
+            (success) in
+            guard success else {return}
+            DispatchQueue.main.sync {
+                self.healthFetcher.beginHealthFetch()
+                self.add(self.mapViewController)
+                self.add(self.infoCardViewController)
+            }
+            
+        }
     }
     
-    func tappedWorkout(workout: HKWorkout, date: Date?, name: String?) {
+    func tappedWorkout(workout: HKWorkout?, date: Date?, name: String?) {
         infoCardViewController.showInfoFor(workout: workout, date: date, name: name)
     }
 }

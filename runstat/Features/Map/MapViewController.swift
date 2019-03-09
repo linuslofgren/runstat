@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import HealthKit
 protocol MapControllerDelegate: class {
-    func tappedWorkout(workout: HKWorkout, date: Date?, name: String?)
+    func tappedWorkout(workout: HKWorkout?, date: Date?, name: String?)
 }
 
 class MapViewController: UIViewController {
@@ -26,6 +26,7 @@ class MapViewController: UIViewController {
     }
     
     private var mapViewDelegate = MapViewDelegate()
+    private let mappingQueue = DispatchQueue(label: "com.linuslofgren.runstat.mappingQueue")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,15 +34,17 @@ class MapViewController: UIViewController {
         map.delegate = mapViewDelegate
         map.mapType = .hybrid
         view.addSubview(map)
-        healthDataFetcher?.beginHealthFetch() {
-            (id, date, locations, workout) in
-                self.saveLocation(id: id, date: date, locations: locations as! [CLLocation])
-//            self.showLine(id: id, distance: workout.totalDistance!, color: UIColor(hue: 0.5, saturation: 0.5, brightness: 0.5, alpha: 0.5), time: workout.duration)
-                        self.showLine(id: id, workout: workout, color: UIColor(hue: 0.5, saturation: 0.5, brightness: 0.5, alpha: 0.5))
+        healthDataFetcher?.get() {
+            (run) in
+            self.mappingQueue.async {
+    //            self.showLine(id: id, distance: workout.totalDistance!, color: UIColor(hue: 0.5, saturation: 0.5, brightness: 0.5, alpha: 0.5), time: workout.duration)
+                 self.showLine(id: run.id?.uuidString ?? "", locations: run.locations?.array as! [Location], color: UIColor(hue: 0.5, saturation: 0.5, brightness: 0.5, alpha: 0.5))
+            }
 
         }
         let tapRec = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
         map.addGestureRecognizer(tapRec)
+        print("Done in mapViewC")
     }
     
     var prevAnn = [DistanceAnnotation]()
@@ -55,30 +58,8 @@ class MapViewController: UIViewController {
                 if let renderer = map.renderer(for: overlay) as? WorkoutRenderer {
                     let polyPoint = renderer.point(for: mapPoint)
                     if renderer.path.contains(polyPoint) {
-                        
-                        //                        print(renderer.data
-                       // self.showInfo(text: renderer.data, time: renderer.time)
-                        delegate?.tappedWorkout(workout: renderer.workout, date: renderer.date, name: renderer.name)
-                        self.makeBig(line: overlay as! WorkoutPolyline)
-                        var annotations = [DistanceAnnotation]()
-                        let points = (overlay as! WorkoutPolyline).points()
-                        var i = 1
-                        var runningDist = 0.0
-                        var kmNr = 1
-                        map.removeAnnotations(prevAnn)
-                        while i < (overlay as! WorkoutPolyline).pointCount {
-                            let point = points[i]
-                            let d = point.distance(to: points[i-1])
-                            runningDist += d
-                            if runningDist >= Double(kmNr * 1000) {
-                                annotations.append(DistanceAnnotation(dist: String(kmNr), coordinate: point.coordinate))
-                                kmNr += 1
-                            }
-                            i += 1
-                        }
-                        //                        print(runningDist)
-                        map.addAnnotations(annotations)
-                        prevAnn = annotations
+                        delegate?.tappedWorkout(workout: nil, date: renderer.date, name: renderer.name)
+                        showRoute(polyline: overlay as! WorkoutPolyline)
                         return
                     }
                 }
@@ -89,13 +70,34 @@ class MapViewController: UIViewController {
             if let bl = self.bigLine {
                 self.map.removeOverlay(bl)
             }
-            
             self.bigLine?.big = false
             if let bl = self.bigLine {
                 self.map.addOverlay(bl)
             }
         }
-        //self.showInfo(text: 0, time: 0)
+    }
+    
+    func showRoute (polyline: WorkoutPolyline) {
+        self.makeBig(line: polyline)
+        var annotations = [DistanceAnnotation]()
+        let points = (polyline).points()
+        var i = 1
+        var runningDist = 0.0
+        var kmNr = 1
+        map.removeAnnotations(prevAnn)
+        while i < (polyline).pointCount {
+            let point = points[i]
+            let d = point.distance(to: points[i-1])
+            runningDist += d
+            if runningDist >= Double(kmNr * 1000) {
+                annotations.append(DistanceAnnotation(dist: String(kmNr), coordinate: point.coordinate))
+                kmNr += 1
+            }
+            i += 1
+        }
+        //                        print(runningDist)
+        map.addAnnotations(annotations)
+        prevAnn = annotations
     }
     var bigLine: WorkoutPolyline? = nil
     var locationsMap: [String: [CLLocationCoordinate2D]] = [:]
@@ -117,41 +119,19 @@ class MapViewController: UIViewController {
         }
     }
     var dateMap: [String: Date] = [:]
-    func saveLocation(id: String, date: Date, locations: [CLLocation]) -> Void {
-        if locationsMap[id] == nil {
-            locationsMap[id] = locations.map({$0.coordinate})
-        } else {
-            locationsMap[id]! += locations.map({$0.coordinate})
-        }
-        dateMap[id] = date
-    }
     
-    func showLine(id: String, workout: HKWorkout, color: UIColor) -> Void {
-        let locList = locationsMap[id]
-        guard locList != nil else {
-            return
-        }
-        let polyLine = WorkoutPolyline(coordinates: locList!, count: locList!.count)
+    func showLine(id: String, locations: [Location], color: UIColor) -> Void {
+        let locList = locations.map({CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude)})
+        let polyLine = WorkoutPolyline(coordinates: locList, count: locList.count)
         polyLine.color = color
-        polyLine.workout = workout
-        let geoCode = CLGeocoder()
-        if locList != nil && locList?.count ?? -1 > 0{
-            geoCode.reverseGeocodeLocation(CLLocation(latitude: locList![0].latitude, longitude: locList![0].longitude), completionHandler: {
-                (placemarks, error) in
-                guard let placemark = placemarks?.first else {return}
-                polyLine.name = (placemark.locality ?? "") + " - " + (placemark.thoroughfare ?? "")
-                print(polyLine.name)
-                polyLine.date = self.dateMap[id]
-                DispatchQueue.main.async {
-                    self.map.addOverlay(polyLine)
-                }
-                
-            })
+        if locList.count > 0 {
+            polyLine.name = "Best run"
+            polyLine.date = self.dateMap[id]
+            DispatchQueue.main.async {
+                self.map.addOverlay(polyLine)
+            }
         }
-        
-        
     }
-    
 }
 
 extension UIColor {

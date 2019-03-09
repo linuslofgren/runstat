@@ -44,17 +44,16 @@ class InfoCardViewController: UIViewController {
         boxView.addGestureRecognizer(boxPanRec)
     }
     
-    func showInfoFor(workout: HKWorkout, date: Date?, name: String?) {
-        let dist = workout.totalDistance!.doubleValue(for: HKUnit.meterUnit(with: HKMetricPrefix.kilo))
-        let time = workout.duration
+    func showInfoFor(workout: HKWorkout?, date: Date?, name: String?) {
+        let dist = 13.0 //workout.totalDistance!.doubleValue(for: HKUnit.meterUnit(with: HKMetricPrefix.kilo))
+        let time = 10.0 //workout.duration
         let spkm = time/dist
         self.boxView.distText = String(format: "%.1f km ", dist)
         self.boxView.nameText = name ?? "---"
-        self.boxView.timeText = String(format: "%.1f minutes", time/60)
-        self.boxView.speedText = String(format: "%.0f:%02.0f min/km", floor(spkm/60), ((spkm/60)-floor(spkm/60))*60)
+        self.boxView.timeText = String(format: "%.1f min", time/60) + " • " + String(format: "%.0f:%02.0f min/km", floor(spkm/60), ((spkm/60)-floor(spkm/60))*60)
         guard date != nil else {print("no date"); return}
         let df = DateFormatter()
-        df.dateFormat = "dd MMM yy hh:mm"
+        df.dateFormat = "dd MMM yy HH:mm"
         self.boxView.dateText = df.string(from: date!)
     }
     
