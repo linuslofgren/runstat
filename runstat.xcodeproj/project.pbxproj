@@ -7,18 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A0BD9BC22415AE800D41F9D /* BoxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0BD9BB22415AE800D41F9D /* BoxViewController.swift */; };
+		1A0BD9BE22415CF900D41F9D /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0BD9BD22415CF900D41F9D /* DetailsViewController.swift */; };
+		1A0D02E4223AACE300900ACC /* StatsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A0D02E3223AACE300900ACC /* StatsView.xib */; };
+		1A0D02E6223AAD5400900ACC /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0D02E5223AAD5400900ACC /* StatsView.swift */; };
+		1A57AD99223404420083BC04 /* RunInfoExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A57AD98223404410083BC04 /* RunInfoExtractor.swift */; };
 		1A58812B221F4556009923B3 /* MapViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58812A221F4556009923B3 /* MapViewDelegate.swift */; };
 		1A58812D221F4755009923B3 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A58812C221F4755009923B3 /* MapViewController.swift */; };
 		1A588131221F4AC3009923B3 /* InfoCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A588130221F4AC3009923B3 /* InfoCardView.swift */; };
 		1A588134221F4C97009923B3 /* HealthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A588133221F4C97009923B3 /* HealthController.swift */; };
+		1AAA22AF2242D06400B94948 /* WorkoutInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AAA22AE2242D06400B94948 /* WorkoutInfoView.swift */; };
+		1AAA22B12242DB1E00B94948 /* LabelWithTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AAA22B02242DB1E00B94948 /* LabelWithTitle.swift */; };
 		1AB7DABF222C52EF00694C30 /* DataStorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB7DABE222C52EF00694C30 /* DataStorer.swift */; };
 		1AB7DAC1222C53E300694C30 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB7DAC0222C53E300694C30 /* DataStore.swift */; };
+		1ACAD7B722418F25006C97E5 /* WorkoutInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ACAD7B622418F25006C97E5 /* WorkoutInfoController.swift */; };
 		1AD3D1DE2222B5F900AE7F37 /* InfoCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD3D1DD2222B5F900AE7F37 /* InfoCardViewController.swift */; };
-		1AD3D1E02222B90900AE7F37 /* MapHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD3D1DF2222B90900AE7F37 /* MapHandler.swift */; };
 		1AD3D1E22222E4E400AE7F37 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD3D1E12222E4E400AE7F37 /* Coordinator.swift */; };
 		1AD3D1E42222EF2300AE7F37 /* PassthroughView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD3D1E32222EF2300AE7F37 /* PassthroughView.swift */; };
 		1AF2C2FA2207451F00DA917D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2C2F92207451F00DA917D /* AppDelegate.swift */; };
-		1AF2C2FC2207451F00DA917D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2C2FB2207451F00DA917D /* ViewController.swift */; };
 		1AF2C2FF2207451F00DA917D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AF2C2FD2207451F00DA917D /* Main.storyboard */; };
 		1AF2C3012207452200DA917D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1AF2C3002207452200DA917D /* Assets.xcassets */; };
 		1AF2C3042207452200DA917D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AF2C3022207452200DA917D /* LaunchScreen.storyboard */; };
@@ -46,19 +52,25 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1A0BD9BB22415AE800D41F9D /* BoxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxViewController.swift; sourceTree = "<group>"; };
+		1A0BD9BD22415CF900D41F9D /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
+		1A0D02E3223AACE300900ACC /* StatsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatsView.xib; sourceTree = "<group>"; };
+		1A0D02E5223AAD5400900ACC /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
+		1A57AD98223404410083BC04 /* RunInfoExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunInfoExtractor.swift; sourceTree = "<group>"; };
 		1A58812A221F4556009923B3 /* MapViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewDelegate.swift; sourceTree = "<group>"; };
 		1A58812C221F4755009923B3 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		1A588130221F4AC3009923B3 /* InfoCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCardView.swift; sourceTree = "<group>"; };
 		1A588133221F4C97009923B3 /* HealthController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthController.swift; sourceTree = "<group>"; };
+		1AAA22AE2242D06400B94948 /* WorkoutInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutInfoView.swift; sourceTree = "<group>"; };
+		1AAA22B02242DB1E00B94948 /* LabelWithTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelWithTitle.swift; sourceTree = "<group>"; };
 		1AB7DABE222C52EF00694C30 /* DataStorer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorer.swift; sourceTree = "<group>"; };
 		1AB7DAC0222C53E300694C30 /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
+		1ACAD7B622418F25006C97E5 /* WorkoutInfoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutInfoController.swift; sourceTree = "<group>"; };
 		1AD3D1DD2222B5F900AE7F37 /* InfoCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCardViewController.swift; sourceTree = "<group>"; };
-		1AD3D1DF2222B90900AE7F37 /* MapHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapHandler.swift; sourceTree = "<group>"; };
 		1AD3D1E12222E4E400AE7F37 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		1AD3D1E32222EF2300AE7F37 /* PassthroughView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassthroughView.swift; sourceTree = "<group>"; };
 		1AF2C2F62207451F00DA917D /* runstat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = runstat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AF2C2F92207451F00DA917D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		1AF2C2FB2207451F00DA917D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		1AF2C2FE2207451F00DA917D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1AF2C3002207452200DA917D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1AF2C3032207452200DA917D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -114,7 +126,6 @@
 			children = (
 				1A58812A221F4556009923B3 /* MapViewDelegate.swift */,
 				1A58812C221F4755009923B3 /* MapViewController.swift */,
-				1AD3D1DF2222B90900AE7F37 /* MapHandler.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -122,9 +133,14 @@
 		1A58812E221F4A9C009923B3 /* InfoCard */ = {
 			isa = PBXGroup;
 			children = (
-				1A588130221F4AC3009923B3 /* InfoCardView.swift */,
-				1AD3D1DD2222B5F900AE7F37 /* InfoCardViewController.swift */,
 				1AD3D1E32222EF2300AE7F37 /* PassthroughView.swift */,
+				1AD3D1DD2222B5F900AE7F37 /* InfoCardViewController.swift */,
+				1A0BD9BB22415AE800D41F9D /* BoxViewController.swift */,
+				1A6C88E4226B434500B7BD1B /* WorkoutInfo */,
+				1A588130221F4AC3009923B3 /* InfoCardView.swift */,
+				1A0D02E3223AACE300900ACC /* StatsView.xib */,
+				1A0D02E5223AAD5400900ACC /* StatsView.swift */,
+				1A0BD9BD22415CF900D41F9D /* DetailsViewController.swift */,
 			);
 			path = InfoCard;
 			sourceTree = "<group>";
@@ -135,6 +151,17 @@
 				1A588133221F4C97009923B3 /* HealthController.swift */,
 			);
 			path = Health;
+			sourceTree = "<group>";
+		};
+		1A6C88E4226B434500B7BD1B /* WorkoutInfo */ = {
+			isa = PBXGroup;
+			children = (
+				1AAA22AE2242D06400B94948 /* WorkoutInfoView.swift */,
+				1AAA22B02242DB1E00B94948 /* LabelWithTitle.swift */,
+				1ACAD7B622418F25006C97E5 /* WorkoutInfoController.swift */,
+				1A57AD98223404410083BC04 /* RunInfoExtractor.swift */,
+			);
+			path = WorkoutInfo;
 			sourceTree = "<group>";
 		};
 		1AB7DABD222C52D900694C30 /* DataStore */ = {
@@ -177,7 +204,6 @@
 				1AF2C2F92207451F00DA917D /* AppDelegate.swift */,
 				1AF56F32222594A4000BA38D /* runstat.xcdatamodeld */,
 				1AD3D1E12222E4E400AE7F37 /* Coordinator.swift */,
-				1AF2C2FB2207451F00DA917D /* ViewController.swift */,
 				1AF2C2FD2207451F00DA917D /* Main.storyboard */,
 				1AF2C3002207452200DA917D /* Assets.xcassets */,
 				1AF2C3022207452200DA917D /* LaunchScreen.storyboard */,
@@ -280,6 +306,7 @@
 				TargetAttributes = {
 					1AF2C2F52207451F00DA917D = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1020;
 						SystemCapabilities = {
 							com.apple.HealthKit = {
 								enabled = 1;
@@ -288,10 +315,12 @@
 					};
 					1AF2C3092207452200DA917D = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1020;
 						TestTargetID = 1AF2C2F52207451F00DA917D;
 					};
 					1AF2C3142207452200DA917D = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1020;
 						TestTargetID = 1AF2C2F52207451F00DA917D;
 					};
 				};
@@ -321,6 +350,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A0D02E4223AACE300900ACC /* StatsView.xib in Resources */,
 				1AF2C3042207452200DA917D /* LaunchScreen.storyboard in Resources */,
 				1AF2C3012207452200DA917D /* Assets.xcassets in Resources */,
 				1AF2C2FF2207451F00DA917D /* Main.storyboard in Resources */,
@@ -348,18 +378,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AAA22AF2242D06400B94948 /* WorkoutInfoView.swift in Sources */,
 				1AB7DAC1222C53E300694C30 /* DataStore.swift in Sources */,
-				1AF2C2FC2207451F00DA917D /* ViewController.swift in Sources */,
 				1AB7DABF222C52EF00694C30 /* DataStorer.swift in Sources */,
 				1AF56F34222594A4000BA38D /* runstat.xcdatamodeld in Sources */,
+				1AAA22B12242DB1E00B94948 /* LabelWithTitle.swift in Sources */,
 				1AD3D1E42222EF2300AE7F37 /* PassthroughView.swift in Sources */,
 				1AD3D1DE2222B5F900AE7F37 /* InfoCardViewController.swift in Sources */,
+				1A57AD99223404420083BC04 /* RunInfoExtractor.swift in Sources */,
 				1A588134221F4C97009923B3 /* HealthController.swift in Sources */,
 				1A58812B221F4556009923B3 /* MapViewDelegate.swift in Sources */,
+				1ACAD7B722418F25006C97E5 /* WorkoutInfoController.swift in Sources */,
+				1A0BD9BE22415CF900D41F9D /* DetailsViewController.swift in Sources */,
 				1AF2C2FA2207451F00DA917D /* AppDelegate.swift in Sources */,
+				1A0BD9BC22415AE800D41F9D /* BoxViewController.swift in Sources */,
 				1A588131221F4AC3009923B3 /* InfoCardView.swift in Sources */,
+				1A0D02E6223AAD5400900ACC /* StatsView.swift in Sources */,
 				1A58812D221F4755009923B3 /* MapViewController.swift in Sources */,
-				1AD3D1E02222B90900AE7F37 /* MapHandler.swift in Sources */,
 				1AD3D1E22222E4E400AE7F37 /* Coordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -545,7 +580,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.linuslofgren.runstat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -564,7 +599,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.linuslofgren.runstat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -584,7 +619,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.linuslofgren.runstatTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/runstat.app/runstat";
 			};
@@ -605,7 +640,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.linuslofgren.runstatTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/runstat.app/runstat";
 			};
@@ -625,7 +660,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.linuslofgren.runstatUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = runstat;
 			};
@@ -645,7 +680,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.linuslofgren.runstatUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = runstat;
 			};

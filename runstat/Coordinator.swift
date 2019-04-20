@@ -26,13 +26,14 @@ class Coordinator: UIViewController, InfoCardControllerDelegate, MapControllerDe
     }()
     
     lazy var mapViewController: MapViewController = {
-        let controller = MapViewController(healthDataFetcher: dataStore)
+        let controller = MapViewController()
         controller.delegate = self
         return controller
     }()
     
     lazy var dataStore: DataStore = {
         let store = DataStore()
+        store.displayer = mapViewController
         return store
     }()
     
@@ -41,23 +42,30 @@ class Coordinator: UIViewController, InfoCardControllerDelegate, MapControllerDe
             (success) in
             guard success else {return}
             DispatchQueue.main.sync {
-                self.healthFetcher.beginHealthFetch()
                 self.add(self.mapViewController)
                 self.add(self.infoCardViewController)
+                self.healthFetcher.beginHealthFetch()
+                self.dataStore.get() {
+                    (run) in
+                    self.mapViewController.display(run: run)
+                }
             }
-            
         }
     }
     
-    func tappedWorkout(workout: HKWorkout?, date: Date?, name: String?) {
-        infoCardViewController.showInfoFor(workout: workout, date: date, name: name)
+    func tappedWorkout(run: Run) {
+        infoCardViewController.showInfoFor(run: run)
     }
 }
 
 extension UIViewController {
-    func add(_ child: UIViewController) {
+    func add(_ child: UIViewController, customView: UIView? = nil) {
         addChild(child)
-        view.addSubview(child.view)
+        if let v = customView {
+            v.addSubview(child.view)
+        } else {
+            view.addSubview(child.view)
+        }
         child.didMove(toParent: self)
     }
     func remove() {

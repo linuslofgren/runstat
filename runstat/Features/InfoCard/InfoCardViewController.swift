@@ -8,6 +8,7 @@
 
 import UIKit
 import HealthKit
+import MapKit
 
 private enum State {
     case closed
@@ -31,110 +32,203 @@ class InfoCardViewController: UIViewController {
     
     weak var delegate: InfoCardControllerDelegate?
     
+    // Track animator progress
+    var progressWhenInterrupted: CGFloat = 0
+    var runningAnimators = [UIViewPropertyAnimator]()
+    private var currentState: State = .closed {
+        didSet {
+            print("Changed currentState")
+        }
+    }
+    
+    let animationDuration = 0.5
+    
     lazy var boxView: InfoCardView = {
         let box = InfoCardView()
+        return box
+    }()
+    
+    lazy var boxVC: BoxViewController = {
+        let box = BoxViewController()
         return box
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view = PassthroughView(frame: view.frame)
+        add(boxVC, customView: boxView)
         layout()
         boxView.addGestureRecognizer(boxTapRec)
         boxView.addGestureRecognizer(boxPanRec)
+//        boxView.clipsToBounds = true
     }
     
-    func showInfoFor(workout: HKWorkout?, date: Date?, name: String?) {
-        let dist = 13.0 //workout.totalDistance!.doubleValue(for: HKUnit.meterUnit(with: HKMetricPrefix.kilo))
-        let time = 10.0 //workout.duration
-        let spkm = time/dist
-        self.boxView.distText = String(format: "%.1f km ", dist)
-        self.boxView.nameText = name ?? "---"
-        self.boxView.timeText = String(format: "%.1f min", time/60) + " • " + String(format: "%.0f:%02.0f min/km", floor(spkm/60), ((spkm/60)-floor(spkm/60))*60)
-        guard date != nil else {print("no date"); return}
-        let df = DateFormatter()
-        df.dateFormat = "dd MMM yy HH:mm"
-        self.boxView.dateText = df.string(from: date!)
-    }
+    lazy var hide = UIViewPropertyAnimator(duration: 0.2, dampingRatio: 1.0, animations: {
+        self.bottomConstraint.constant = self.bottomConstantHidden
+        self.view.layoutIfNeeded()
+    })
     
-    let bottomConstant: CGFloat = 400
+    lazy var show = UIViewPropertyAnimator(duration: 0.2, dampingRatio: 1.0, animations: {
+        self.bottomConstraint.constant = self.bottomConstant
+        self.view.layoutIfNeeded()
+    })
+    
+    func showInfoFor(run: Run) {
+        let workoutController = WorkoutInfoController()
+        workoutController.run = run
+        self.boxVC.pushViewController(workoutController, animated: false)
+        DispatchQueue.main.async {
+            if !self.hidden {
+                self.hide.addCompletion {
+                    [unowned self] _ in
+                    self.show.startAnimation()
+                }
+                self.hide.startAnimation()
+            } else {
+                self.show.startAnimation()
+            }
+        }
+    }
+    let hidden = true
+    let bottomConstant: CGFloat = 300
+    let bottomConstantHidden: CGFloat = 600
+    var target: CGFloat = 300
+    
     var bottomConstraint = NSLayoutConstraint()
     func layout() {
         boxView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(boxView)
         boxView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         boxView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        bottomConstraint = boxView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: bottomConstant)
+        bottomConstraint = boxView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: bottomConstantHidden)
         bottomConstraint.isActive = true
         boxView.heightAnchor.constraint(equalToConstant: 500).isActive = true
         boxView.setNeedsLayout()
+        
+        boxVC.view.translatesAutoresizingMaskIntoConstraints = false
+        boxVC.view.leadingAnchor.constraint(equalTo: boxView.leadingAnchor).isActive = true
+        boxVC.view.trailingAnchor.constraint(equalTo: boxView.trailingAnchor).isActive = true
+        boxVC.view.topAnchor.constraint(equalTo: boxView.topAnchor).isActive = true
+        boxVC.view.bottomAnchor.constraint(equalTo: boxView.bottomAnchor).isActive = true
+        boxVC.view.setNeedsLayout()
     }
-    private var animationProg: CGFloat = 0
-    private var currentState: State = .closed
+    
+    
+    private func nextState() -> State {
+        switch self.currentState {
+        case .closed:
+            return .open
+        case .open:
+            return .closed
+        }
+    }
     
     lazy var boxTapRec: UITapGestureRecognizer = {
         let rec = UITapGestureRecognizer()
         rec.addTarget(self, action: #selector(boxViewTapped(recognizer:)))
         return rec
     }()
+    
     lazy var boxPanRec: UIPanGestureRecognizer = {
         let rec = UIPanGestureRecognizer()
         rec.addTarget(self, action: #selector(boxViewPanned(recognizer:)))
         return rec
     }()
-    var transitionAnimator: UIViewPropertyAnimator!
-    private func animateTransitionIfNeeded(to: State, duration: Double) {
-        let state = to
-        transitionAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1, animations: {
+    
+    private func animateOrReverseRunningTransition(state: State, duration: TimeInterval) {
+        if runningAnimators.isEmpty {
+            animateTransitionIfNeeded(state: state, duration: duration)
+            runningAnimators.forEach({ $0.startAnimation() })
+        } else {
+            runningAnimators.forEach({ $0.isReversed = !$0.isReversed })
+        }
+    }
+    
+    private func startInteractiveTransition(state: State, duration: TimeInterval) {
+        animateTransitionIfNeeded(state: state, duration: duration)
+        runningAnimators.forEach({ $0.pauseAnimation() })
+        progressWhenInterrupted = runningAnimators.first?.fractionComplete ?? 0
+    }
+    
+    private func addMoveAnimator(state: State, duration: TimeInterval) {
+        let moveAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) {
             switch state {
-            case .open:
-                self.bottomConstraint.constant = 0
             case .closed:
                 self.bottomConstraint.constant = self.bottomConstant
-            }
-            self.view.layoutIfNeeded()
-        })
-        transitionAnimator.addCompletion {
-            (position) in
-            switch position {
-            case .start:
-                self.currentState = state.otherDir
-            case .end:
-                self.currentState = state
-            case .current:
-                ()
-            }
-            switch self.currentState {
+                self.view.layoutIfNeeded()
             case .open:
                 self.bottomConstraint.constant = 0
-            case .closed:
-                self.bottomConstraint.constant = self.bottomConstant
+                self.view.layoutIfNeeded()
             }
         }
-        transitionAnimator.startAnimation()
+        moveAnimator.addCompletion({ (position) in
+            switch position {
+            case .end:
+                self.currentState = self.nextState()
+            case .current:
+                break
+            case .start:
+                // Constraints needs to be set manually because they don't change back when reversed
+                self.bottomConstraint.constant = self.currentState == .open ? 0 : self.bottomConstant
+                break
+            default:
+                break
+            }
+            self.runningAnimators.removeAll()
+        })
+        runningAnimators.append(moveAnimator)
     }
-    @objc func boxViewTapped(recognizer: UITapGestureRecognizer) {
-        let state = currentState.otherDir
-        animateTransitionIfNeeded(to: state, duration: 0.8)
+    
+    private func animateTransitionIfNeeded(state: State, duration: TimeInterval) {
+        if runningAnimators.isEmpty {
+            addMoveAnimator(state: state, duration: duration)
+        }
+    }
+    
+    private func updateInteractiveTransition(fractionComplete: CGFloat) {
+        runningAnimators.forEach({ $0.fractionComplete = fractionComplete })
+    }
+    
+    private func continueInteractiveTransition(cancle: Bool) {
+        if cancle {
+            runningAnimators.forEach({
+                $0.isReversed = !$0.isReversed
+                $0.continueAnimation(withTimingParameters: nil, durationFactor: 0)
+            })
+            return
+        }
+        runningAnimators.forEach({ $0.continueAnimation(withTimingParameters: nil, durationFactor: 0) })
+    }
+    
+    private func fractionComplete(state: State, translation: CGPoint) -> CGFloat {
+        let fraction = (state == .open ? -translation.y : translation.y) / self.target + progressWhenInterrupted
+        return fraction
+    }
+    
+    private func cancleFromVelocity(state: State, velocity: CGPoint) -> Bool {
+        let cancle = (state == .open ? velocity.y > 0 : velocity.y < 0)
+        return cancle
     }
     
     var animator: UIViewPropertyAnimator!
     @objc func boxViewPanned(recognizer: UIPanGestureRecognizer) {
+        let translation = recognizer.translation(in: boxView)
+        let velocity = recognizer.velocity(in: boxView)
+        
         switch recognizer.state {
         case .began:
-            animateTransitionIfNeeded(to: currentState.otherDir, duration: 0.8)
-            transitionAnimator.pauseAnimation()
-            animationProg = transitionAnimator.fractionComplete
+            startInteractiveTransition(state: nextState(), duration: animationDuration)
         case .changed:
-            let translation = recognizer.translation(in: boxView)
-            var frac = -translation.y / bottomConstant
-            if currentState == .open { frac *= -1 }
-            transitionAnimator.fractionComplete = frac + animationProg
+            updateInteractiveTransition(fractionComplete: fractionComplete(state: nextState(), translation: translation))
         case .ended:
-            transitionAnimator.continueAnimation(withTimingParameters: nil, durationFactor: 0)
+            continueInteractiveTransition(cancle: cancleFromVelocity(state: nextState(), velocity: velocity))
         default:
             ()
         }
+    }
+    
+    @objc func boxViewTapped(recognizer: UITapGestureRecognizer) {
+        animateOrReverseRunningTransition(state: nextState(), duration: animationDuration)
     }
 
 }

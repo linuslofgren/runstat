@@ -1,21 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18C54" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18D109" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Location" representedClassName="Location" syncable="YES" codeGenerationType="class">
         <attribute name="elevation" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="time" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="run" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Run" inverseName="locations" inverseEntity="Run" syncable="YES"/>
+        <relationship name="secondLayerLocation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SecondLayerLocation" inverseName="location" inverseEntity="SecondLayerLocation" syncable="YES"/>
     </entity>
     <entity name="Run" representedClassName="Run" syncable="YES" codeGenerationType="class">
+        <attribute name="distance" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="endDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="workout" optional="YES" attributeType="Transformable" syncable="YES"/>
         <relationship name="locations" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Location" inverseName="run" inverseEntity="Location" syncable="YES"/>
     </entity>
+    <entity name="SecondLayerLocation" representedClassName="SecondLayerLocation" syncable="YES" codeGenerationType="class">
+        <attribute name="elevation" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="location" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="secondLayerLocation" inverseEntity="Location" syncable="YES"/>
+        <relationship name="thirdLayerLocation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ThirdLayerLocation" inverseName="secondLayerLocation" inverseEntity="ThirdLayerLocation" syncable="YES"/>
+    </entity>
+    <entity name="ThirdLayerLocation" representedClassName="ThirdLayerLocation" syncable="YES" codeGenerationType="class">
+        <attribute name="elevation" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="secondLayerLocation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SecondLayerLocation" inverseName="thirdLayerLocation" inverseEntity="SecondLayerLocation" syncable="YES"/>
+    </entity>
     <elements>
-        <element name="Location" positionX="-63" positionY="9" width="128" height="120"/>
-        <element name="Run" positionX="-63" positionY="-18" width="128" height="120"/>
+        <element name="Location" positionX="-63" positionY="9" width="128" height="135"/>
+        <element name="Run" positionX="-63" positionY="-18" width="128" height="135"/>
+        <element name="SecondLayerLocation" positionX="-54" positionY="45" width="128" height="135"/>
+        <element name="ThirdLayerLocation" positionX="-45" positionY="54" width="128" height="120"/>
     </elements>
 </model>

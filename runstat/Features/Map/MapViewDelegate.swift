@@ -12,37 +12,40 @@ import MapKit
 import HealthKit
 class MapViewDelegate: NSObject, MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        print("OVERLAYING")
         if let polyline = overlay as? WorkoutPolyline {
             let renderer = WorkoutRenderer(overlay: overlay)
-            renderer.name = polyline.name
-            renderer.date = polyline.date
+            renderer.run = polyline.run
             renderer.big = polyline.big
             renderer.strokeColor = polyline.color
             if polyline.big {
-                renderer.lineWidth = 8
-                renderer.strokeColor = UIColor(hue: 0.1, saturation: 0.7, brightness: 1.0, alpha: 1.0)
+                renderer.lineWidth = 6
+                renderer.strokeColor = UIColor(hue: 0, saturation: 0.8, brightness: 0.8, alpha: 1.0)
             } else {
-                renderer.lineWidth = 5
-                renderer.strokeColor = UIColor.random.withAlphaComponent(0.4)
+                renderer.lineWidth = 2
+                renderer.strokeColor = UIColor.random.withAlphaComponent(0.9)
             }
+            print("Using workout renderer")
             return renderer
         }
-        return MKOverlayRenderer()
+        if let tileOverlay = overlay as? MKTileOverlay {
+            print("Tile")
+            return MKTileOverlayRenderer(tileOverlay: tileOverlay)
+        } else {print("No tile")}
+        print(overlay)
+        return MKTileOverlayRenderer()
     }
-
 
 }
 class WorkoutPolyline: MKPolyline {
     var big: Bool = false
     var color: UIColor = UIColor.red
-    var date: Date?
-    var name: String?
+    var run: Run!
 }
 
 class WorkoutRenderer: MKPolylineRenderer {
     var big: Bool = false
-    var name: String?
-    var date: Date?
+    var run: Run!
 }
 class DistanceAnnotation: NSObject, MKAnnotation {
     var title: String?
@@ -51,5 +54,12 @@ class DistanceAnnotation: NSObject, MKAnnotation {
     init(dist: String, coordinate: CLLocationCoordinate2D) {
         self.title = dist
         self.coordinate = coordinate
+    }
+}
+
+
+extension UIColor {
+    static var random: UIColor {
+        return UIColor(hue: .random(in: 0.2...0.85), saturation: 1, brightness: 0.8, alpha: 1.0)
     }
 }
