@@ -63,12 +63,12 @@ class InfoCardViewController: UIViewController {
 //        boxView.clipsToBounds = true
     }
     
-    lazy var hide = UIViewPropertyAnimator(duration: 0.2, dampingRatio: 1.0, animations: {
+    lazy var hide = UIViewPropertyAnimator(duration: 2.0, dampingRatio: 1.0, animations: {
         self.bottomConstraint.constant = self.bottomConstantHidden
         self.view.layoutIfNeeded()
     })
     
-    lazy var show = UIViewPropertyAnimator(duration: 0.2, dampingRatio: 1.0, animations: {
+    lazy var show = UIViewPropertyAnimator(duration: 2.0, dampingRatio: 1.0, animations: {
         self.bottomConstraint.constant = self.bottomConstant
         self.view.layoutIfNeeded()
     })
